@@ -5,6 +5,420 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Funnel Sans", sans-serif;
+  letter-spacing: -4%;
+  line-height: 100%;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+main {
+  min-height: 120vh;
+  width: 100%;
+  position: relative;
+}
+.heroImg {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.heroImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* .botContainer{
+    width: 400px;
+    height: 650px;
+    background: white;
+    border-radius: 24px;
+    position: fixed;
+    z-index: 1000;
+    top: 168px;
+    right: 100px;
+padding: 10px 16px;
+} */
+.topBg{
+    rotate: 49.86deg;
+    width: 100%;
+    height: 100%;
+    background: #5D05B4;
+    filter: blur(80px);
+    position: absolute;
+    top: -50%;
+    left: 120%;
+    z-index: -1;
+}
+.bottombg{
+    rotate: -49.86deg;
+    width: 100%;
+    height: 100%;
+    background: #C3CCFF;
+    filter: blur(80px);
+    position: absolute;
+     top: 45%;
+    right: 100%;
+    z-index: -1;
+}
+
+ .botContainer{
+     width: 400px;
+    height: 650px;
+background: white;
+border-radius: 24px;
+position: fixed;
+z-index: 1000;
+top: 15%;
+right: 5.21vw;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+box-shadow: 0px 20px 50px 0px #00000040;
+border: 2px solid #FFFFFF33;
+transition: all 0.5s ease; /* smooth animation */
+
+ }
+ .botTopNav{
+    width: 100%;
+     background: #6D28D9;
+     padding: 10px 16px;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+ }
+.botTopNavLeft{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.botTopNavLeft .tingtingAgent{
+    font-size: 16px;
+    color: white;
+}
+.timeContainer{
+    display: flex;
+    gap: 8px;
+    color: #FFFFFFB2;
+    font-size: 12px;
+}
+.botTopNavRight{
+display: flex;
+gap: 10px;
+}
+
+.botTopNavRight .circle{
+    width: 36px;
+    height: 36px;
+    background: #FFFFFF33;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+}
+.paddingContainer{
+    padding-top: 32px;
+    padding-bottom: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;                
+    justify-content: space-between;
+}
+.centerBotContainer{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:24px;
+width: 100%;
+height: 388px;
+}
+.logoagent{
+    object-fit: cover;
+}
+.centerBotCotent h1{
+    font-weight: 400;
+    text-align: center;
+    font-size: 28px;
+    max-width: 251px;
+   
+}
+.btnsContainer{
+    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+.btn{
+    background: #00000014;
+    padding: 8px 12px;
+    border-radius: 32px;
+    font-size: 14px;
+    color: #000000E5;
+}
+
+.textAreaContainer{
+background:white;
+border-radius:16px;
+padding:12px 16px;
+display:flex;
+width: 100%;
+min-height: 110px;
+box-shadow:0 10px 20px rgba(0,0,0,0.05);
+}
+
+textarea{
+flex:1;
+border:none;
+outline:none;
+resize:none;
+font-size:14px;
+height:40px;
+}
+.askBtnContainer{
+    display: flex;
+    align-items: end;
+}
+.askBtnCircle{
+    width: 18px;
+    height: 18px;
+    background: white;
+}
+.askBtn{
+background:#7C3AED;
+
+color:white;
+border:none;
+height: 36px;
+padding:6px 18px;
+border-radius:20px;
+font-size:14px;
+cursor:pointer;
+display: flex;
+gap: 8px;
+align-items: center;
+justify-content: center;
+}
+
+.botContainer.expand{
+width:900px;
+height:700px;
+top: 10%;
+opacity:1;
+}
+.chatMessages{
+flex:1;
+width:100%;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+align-items: center;
+gap: 24px;
+/* hide scrollbar */
+scrollbar-width:none;   
+display: none;
+}
+.textAreaContainer{
+margin-top:auto;
+}
+
+.chatMessages::-webkit-scrollbar{
+display:none;
+}
+.message{
+padding:10px 14px;
+border-radius:12px;
+max-width:70%;
+font-size:14px;
+}
+
+.user{
+background:#fff;
+color: #303033;
+align-self:flex-end;
+}
+
+.bot{
+background:#fff;
+color: #303033;
+align-self:flex-start;
+}
+
+.centerBotContainer{
+transition:opacity .3s ease;
+}
+
+.centerBotContainer.hide{
+opacity:0;
+pointer-events:none;
+} 
+
+
+@media (max-width:600px){
+
+.botContainer{
+width:95vw;
+height:85vh;
+top:8%;
+right:2.5vw;
+border-radius:20px;
+}
+
+.botContainer.expand{
+width:100vw;
+height:100vh;
+top:0;
+right:0;
+border-radius:0;
+}
+
+.botTopNav{
+padding:12px;
+}
+
+.botTopNavLeft .tingtingAgent{
+font-size:14px;
+}
+
+.timeContainer{
+font-size:11px;
+}
+
+.centerBotCotent h1{
+font-size:20px;
+max-width:220px;
+}
+
+.btn{
+font-size:12px;
+padding:6px 10px;
+}
+
+.textAreaContainer{
+min-height:80px;
+padding:10px;
+}
+
+textarea{
+font-size:13px;
+}
+
+.askBtn{
+height:32px;
+font-size:12px;
+padding:4px 14px;
+}
+
+.logoagent{
+width:56px;
+}
+
+}
+
+@media (max-width:1024px){
+
+.botContainer{
+width:340px;
+height:560px;
+top:20%;
+right:20px;
+}
+
+.botContainer.expand{
+width:90vw;
+height:80vh;
+top:10%;
+right:5%;
+}
+
+.centerBotCotent h1{
+font-size:24px;
+}
+
+.textAreaContainer{
+min-height:90px;
+}
+
+.askBtn{
+height:34px;
+font-size:13px;
+}
+
+}
+
+.botMessage{
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+.botHeader{
+display: flex;
+gap: 16px;
+width: 100%;
+padding-right: 48px;
+}
+.tingtingAi{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 8px;
+}
+.tingtingAi span{
+    color: #00000080;
+    font-size: 12px;
+    letter-spacing: 0% !important;
+}
+.botAvatar{
+width:28px;
+height:28px;
+border-radius:50%;
+object-fit:cover;
+background: #000;
+}
+.typing{
+    display: none;
+} 
+.botBubble{
+background:#fff;
+padding:12px 16px;
+border-radius:16px;
+font-size:14px;
+line-height: 120% !important;
+color:#303030;
+display: flex;
+gap: 16px;
+width:100%;
+}
+
+.user{
+background:#fff;
+padding:10px 14px;
+border-radius:20px;
+max-width:70%;
+align-self:flex-end;
+}
+
+    </style>
   </head>
 
   <body>
