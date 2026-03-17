@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TingTing AI Chat</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Funnel Sans", sans-serif;
+      letter-spacing: -0.04em;
+      line-height: 1.2;
+    }
+
+    body {
+      height: 100vh;
+      width: 100%;
+      background: #f0f2f5;
+    }
+
+    .botContainer {
+      width: 350px;
+      height: 550px;
+      background: #F3F4F6;
+      /* Light gray background for contrast */
+      border-radius: 24px;
+      position: fixed;
+      z-index: 1000;
+      top: 50%;
+      right: 50px;
+      transform: translateY(-50%);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ddd;
+      transition: all 0.5s ease;
+    }
+
+    .botContainer.expand {
+      width: 800px;
+      height: 600px;
+    }
+
+    .botTopNav {
+      width: 100%;
+      background: #6D28D9;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+    }
+
+    .botTopNavRight .circle {
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .paddingContainer {
+      flex: 1;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Message Area */
+    #chatMessages {
+      flex: 1;
+      overflow-y: auto;
+      display: none;
+      /* Hidden until first message */
+      flex-direction: column;
+      gap: 15px;
+      padding-bottom: 10px;
+      scrollbar-width: none;
+    }
+
+    #chatMessages::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* FIX: Positioning for the Bot Wrapper */
+    .botMessage {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: 85%;
+      align-self: flex-start;
+      /* Keeps it on the left */
+    }
+
+    .botHeader {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #4B5563;
+    }
+
+    .botAvatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #6D28D9;
+    }
+
+    .botBubble {
+      background: white;
+      padding: 12px 16px;
+      border-radius: 0 18px 18px 18px;
+      font-size: 14px;
+      color: #1F2937;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .user {
+      background: #6D28D9;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 18px 18px 0 18px;
+      max-width: 75%;
+      align-self: flex-end;
+      font-size: 14px;
+    }
+
+    /* Welcome Center */
+    .centerBotContainer {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 20px;
+    }
+
+    .textAreaContainer {
+      background: white;
+      border-radius: 16px;
+      padding: 10px;
+      display: flex;
+      gap: 10px;
+      border: 1px solid #e5e7eb;
+    }
+
+    textarea {
+      flex: 1;
+      border: none;
+      outline: none;
+      resize: none;
+      font-size: 14px;
+      padding: 5px;
+    }
+
+    .askBtn {
+      background: #6D28D9;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .typing {
+      font-style: italic;
+      font-size: 12px;
+      color: #9CA3AF;
+      align-self: flex-start;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="botContainer">
+    <div class="botTopNav">
+      <div class="botTopNavLeft">
+        <span class="tingtingAgent">TingTing Agent</span>
+      </div>
+      <div class="botTopNavRight">
+        <div class="circle extendbtn">⤢</div>
+      </div>
+    </div>
+
+    <div class="paddingContainer">
+      <div id="centerBotContainer" class="centerBotContainer">
+        <img src="logoagent.png" width="80" class="logoagent" alt="Bot Logo">
+        <h1>How can I help you today?</h1>
+      </div>
+
+      <div id="chatMessages"></div>
+
+      <div class="textAreaContainer">
+        <textarea id="chatInput" placeholder="Ask me anything..." rows="1"></textarea>
+        <button class="askBtn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const extendbtn = document.querySelector(".extendbtn");
+    const botContainer = document.querySelector(".botContainer");
+    const input = document.querySelector("#chatInput");
+    const askBtn = document.querySelector(".askBtn");
+    const chatMessages = document.querySelector("#chatMessages");
+    const centerContainer = document.querySelector("#centerBotContainer");
+
+    // Toggle Expand
+    extendbtn.addEventListener("click", () => {
+      botContainer.classList.toggle("expand");
+    });
+
+    async function sendMessage() {
+      let userText = input.value.trim();
+      if (!userText) return;
+
+      // UI Changes
+      centerContainer.style.display = "none";
+      chatMessages.style.display = "flex";
+
+      // Append User Message
+      let userMsg = document.createElement("div");
+      userMsg.classList.add("user");
+      userMsg.innerText = userText;
+      chatMessages.appendChild(userMsg);
+
+      input.value = "";
+
+      // Typing Indicator
+      let typing = document.createElement("div");
+      typing.classList.add("typing");
+      typing.innerText = "TingTing is thinking...";
+      chatMessages.appendChild(typing);
+
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      try {
+        let res = await fetch("https://api.affiliateplus.xyz/api/chatbot", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: userText,
+            botname: "TingTing",
+            ownername: "Aryan"
+          })
+        });
+
+        let data = await res.json();
+        typing.remove();
+
+        // Create Bot Message Wrapper
+        let botWrapper = document.createElement("div");
+        botWrapper.classList.add("botMessage");
+
+        botWrapper.innerHTML = `
+                <div class="botHeader">
+                    <img src="logoagent.png" class="botAvatar">
+                    <span>TingTing Agent</span>
+                </div>
+                <div class="botBubble">
+                    ${data.message}
+                </div>
+            `;
+
+        chatMessages.appendChild(botWrapper);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      } catch (e) {
+        typing.innerText = "Error connecting to bot.";
+      }
+    }
+
+    askBtn.addEventListener("click", sendMessage);
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+
+</body>
+
+</html>

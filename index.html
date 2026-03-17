@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main class="main">
+      <div class="heroImg">
+        <img src="./tingtingheroImg.png" alt="" />
+      </div>
+    </main>
+
+    <div class="botContainer">
+      <div class="topBg"></div>
+
+      <div class="botTopNav">
+        <div class="botTopNavLeft">
+          <p class="tingtingAgent">TingTing Agent</p>
+          <div class="timeContainer">
+            <p>Mon 23, Feb</p>
+            <p>Time: 21:26</p>
+          </div>
+        </div>
+        <div class="botTopNavRight">
+          <div class="circle extendbtn">[]</div>
+          <div class="circle"></div>
+        </div>
+      </div>
+
+
+     
+
+
+        <div class="paddingContainer">
+        <div class="chatMessages" id="chatMessages"></div>
+
+        <div id="centerBotContainer" class="centerBotContainer">
+          <img src="logoagent.png" class="logoagent" alt="" />
+          <div class="centerBotCotent">
+            <h1>Welcome to the TingTing Experience!</h1>
+          </div>
+          <div class="btnsContainer">
+            <p class="btn">About TingTing</p>
+            <p class="btn">TingTing Agents</p>
+            <p class="btn">Products & Pricing</p>
+            <p class="btn">How to get started</p>
+          </div>
+        </div>
+        <div class="textAreaContainer">
+          <textarea
+            placeholder="Ask anything..."
+            id="chatInput"
+            rows="1"
+          ></textarea>
+          <div class="askBtnContainer">
+            <div class="askBtn">
+              <div class="askBtnCircle"></div>
+              <p>Ask Us</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottombg"></div>
+    </div>
+  </body>
+
+  <script>
+    const extendbtn = document.querySelector(".extendbtn");
+    const botContainer = document.querySelector(".botContainer");
+    const input = document.querySelector("#chatInput");
+    const askBtn = document.querySelector(".askBtn");
+    const chatMessages = document.querySelector("#chatMessages");
+    const centerContainer = document.querySelector("#centerBotContainer");
+
+    // Toggle Expand
+    extendbtn.addEventListener("click", () => {
+      botContainer.classList.toggle("expand");
+    });
+
+    async function sendMessage() {
+      let userText = input.value.trim();
+      if (!userText) return;
+
+      // UI Changes
+      centerContainer.style.display = "none";
+      chatMessages.style.display = "flex";
+
+      // Append User Message
+      let userMsg = document.createElement("div");
+      userMsg.classList.add("user");
+      userMsg.innerText = userText;
+      chatMessages.appendChild(userMsg);
+
+      input.value = "";
+
+      // Typing Indicator
+      let typing = document.createElement("div");
+      typing.classList.add("typing");
+      typing.innerText = "TingTing is thinking...";
+      chatMessages.appendChild(typing);
+
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      try {
+        let res = await fetch("https://api.affiliateplus.xyz/api/chatbot", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: userText,
+            botname: "TingTing",
+            ownername: "Aryan",
+          }),
+        });
+
+        let data = await res.json();
+        typing.remove();
+
+        // Create Bot Message Wrapper
+        let botWrapper = document.createElement("div");
+        botWrapper.classList.add("botMessage");
+
+        botWrapper.innerHTML = `
+                 <div class="botHeader">
+        <img src="logoagent.png" class="botAvatar" />
+        <div class="tingtingAi">
+            <span class="tingtingAiSapn">TingTing Agent</span>
+            <div class="botBubble">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus molestiae fugiat dolorem voluptas, perspiciatis at laudantium expedita debitis nam laborum.</div>
+        </div>
+        </div>
+            `;
+
+        chatMessages.appendChild(botWrapper);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      } catch (e) {
+        // Create Bot Message Wrapper
+        let botWrapper = document.createElement("div");
+        botWrapper.classList.add("botMessage");
+
+        botWrapper.innerHTML = `
+                <div class="botHeader">
+        <img src="logoagent.png" class="botAvatar" />
+        <div class="tingtingAi">
+            <span class="tingtingAiSapn">TingTing Agent</span>
+            <div class="botBubble">Customer communication shouldn't feel scattered. With TingTing, every voice, survey, and message comes together in one intelligent flow - powered by AI that speaks your language, listens contextually, and delivers at scale.</div>
+        </div>
+        </div>
+            `;
+
+        chatMessages.appendChild(botWrapper);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+    }
+
+    askBtn.addEventListener("click", sendMessage);
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+</html>
