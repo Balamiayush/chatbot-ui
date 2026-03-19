@@ -1,75 +1,93 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <main class="main">
-      <div class="heroImg">
-        <img src="/assets/tingtingheroImg.png" alt="" />
-      </div>
-    </main>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-    <div class="botContainer">
-      <img src="/assets/backgroundsvg.svg" class="topBg" alt="">
-      
-
-      <div class="botTopNav">
-        <div class="botTopNavLeft">
-          <p class="tingtingAgent">TingTing Agent</p>
-          <div class="timeContainer">
-  <p id="date"></p>
-  <p id="time"></p>
-</div>
-        </div>
-        <div class="botTopNavRight">
-          <div class="circle extendbtn">
-            <img src="./assets/expandsvg.svg" alt="">
-          </div>
-          <div class="circle">
-            <img src="./assets/dotsvg.svg" alt="">
-          </div>
-        </div>
-      </div>
-
-      <div class="paddingContainer">
-        <div class="chatMessages" id="chatMessages"></div>
-
-        <div id="centerBotContainer" class="centerBotContainer">
-          <img src="/assets/logoagent.png" class="logoagent" alt="" />
-          <div class="centerBotCotent">
-            <h1>Welcome to the TingTing Experience!</h1>
-          </div>
-          <div class="btnsContainer">
-            <p class="btn">About TingTing</p>
-            <p class="btn">TingTing Agents</p>
-            <p class="btn">Products & Pricing</p>
-            <p class="btn">How to get started</p>
-          </div>
-        </div>
-        <div class="textAreaContainer">
-          <textarea
-            placeholder="Ask anything..."
-            id="chatInput"
-            rows="1"
-          ></textarea>
-          <div class="askBtnContainer">
-            <div class="askBtn">
-              <div class="askBtnCircle">
-                <img src="assets/askthing.svg" alt="">
-              </div>
-              <p>Ask Us</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      
+<body>
+  <main class="main">
+    <div class="heroImg">
+      <img src="/assets/tingtingheroImg.png" alt="" />
     </div>
-  </body>
-  <script src="script.js"></script>
+    <img class="aiBtn" src="/assets/tingtingaibtn.svg" alt="">
+  </main>
+
+  <div class="botContainer">
+    <img src="/assets/backgroundsvg.svg" class="topBg" alt="">
+
+
+    <div class="botTopNav">
+      <div class="botTopNavLeft">
+        <p class="tingtingAgent">TingTing Agent</p>
+        <div class="timeContainer">
+          <p id="date"></p>
+          <p id="time"></p>
+        </div>
+      </div>
+      <div class="botTopNavRight">
+        <div class="circle extendbtn">
+          <img src="./assets/expandsvg.svg" alt="">
+        </div>
+        <div class="circle closebtn">
+          <img src="./assets/dotsvg.svg" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="paddingContainer">
+      <div class="chatMessages" id="chatMessages">
+        <div class="botwrapper">
+             <div class="botHeader">
+            <img src="assets/aiagentsvg.svg" class="botAvatar" />
+            <div class="tingtingAi">
+                <span class="tingtingAiSapn">TingTing Agent</span>
+                <div class="botBubble">Customer communication shouldn't feel scattered. With TingTing, every voice, survey, and message comes together in one intelligent flow - powered by AI that speaks your language, listens contextually, and delivers at scale.</div>
+            </div>
+            </div>
+        </div>
+        <div class="botwrapper">
+             <div class="botHeader">
+            <img src="assets/aiagentsvg.svg" class="botAvatar" />
+            <div class="tingtingAi">
+                <span class="tingtingAiSapn">TingTing Agent</span>
+                <div class="botBubble">Customer communication shouldn't feel scattered. With TingTing, every voice, survey, and message comes together in one intelligent flow - powered by AI that speaks your language, listens contextually, and delivers at scale.</div>
+            </div>
+            </div>
+        </div>
+      </div>
+      <div id="centerBotContainer" class="centerBotContainer">
+        <img src="/assets/logoagent.png" class="logoagent" alt="" />
+        <div class="centerBotCotent">
+          <h1>Welcome to the TingTing Experience!</h1>
+        </div>
+        <div class="btnsContainer">
+          <p class="btn">About TingTing</p>
+          <p class="btn">TingTing Agents</p>
+          <p class="btn">Products & Pricing</p>
+          <p class="btn">How to get started</p>
+        </div>
+      </div>
+      <div class="textAreaContainer">
+        <textarea placeholder="Ask anything..." id="chatInput" rows="1"></textarea>
+        <div class="askBtnContainer">
+          <div class="askBtn">
+            <div class="askBtnCircle">
+              <img src="assets/askthing.svg" alt="">
+            </div>
+            <p>Ask Us</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</body>
+<!-- <script src="script.js"></script> -->
+<script src="index.js"></script>
+
 </html>
